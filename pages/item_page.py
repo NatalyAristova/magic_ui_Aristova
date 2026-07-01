@@ -1,6 +1,5 @@
 from pages.base_page import BasePage
 from pages.locators import item_page_locators as item_loc
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -28,6 +27,12 @@ class Item(BasePage):
         )
 
 
-    def breadcrumbs(self):
-        crumbs = (WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(item_loc.breadcrumbs)))
-        return crumbs.text
+    def get_breadcrumbs(self):
+        return self.breadcrumbs(item_loc.breadcrumbs)
+
+
+    def check_breadcrumbs(self):
+        breadcrumbs_text = self.get_breadcrumbs()
+        assert 'All Products' in breadcrumbs_text
+        assert 'Multimedia' in breadcrumbs_text
+        assert 'Office Design Software' in breadcrumbs_text

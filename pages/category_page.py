@@ -10,11 +10,7 @@ class Category(BasePage):
 
 
     def search_table(self, text):
-        search_field = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(cat_loc.search_field))
-        self.driver.execute_script("arguments[0].value = arguments[1];", search_field, text)
-        self.driver.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles: true}))",
-                                   search_field)
-        self.driver.execute_script("arguments[0].form.submit()", search_field)
+        self.search(cat_loc.search_field, text)
 
 
     def check_search_alert(self, text):
@@ -23,16 +19,16 @@ class Category(BasePage):
         assert text in found_item.text
 
 
-    def click_steel_checkbox(self):
+    def click_checkbox(self, locator):
         checkbox = (WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(cat_loc.steel_checkbox)))
+            EC.presence_of_element_located(locator)))
         self.driver.execute_script("arguments[0].click();", checkbox)
 
 
-    def assert_steel_item(self):
+    def check_item(self, locator, text):
         found_item = (WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(cat_loc.steel_table)))
-        assert found_item.text == 'Customizable Desk'
+            EC.presence_of_element_located(locator)))
+        assert found_item.text == text
 
 
     def add_item_to_cart(self):
@@ -42,6 +38,9 @@ class Category(BasePage):
         actions.move_to_element(table)
         actions.click(cart)
         actions.perform()
+
+
+    def check_added_item(self):
         table_name = self.find(cat_loc.table_name)
         modal = WebDriverWait(self.driver, 15).until(
             EC.presence_of_element_located((cat_loc.modal)))

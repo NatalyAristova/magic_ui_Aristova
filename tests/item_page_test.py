@@ -1,9 +1,6 @@
 def test_breadcrumbs(item_page):
     item_page.open_page()
-    breadcrumbs_text = item_page.breadcrumbs()
-    assert 'All Products' in breadcrumbs_text
-    assert 'Multimedia' in breadcrumbs_text
-    assert 'Office Design Software' in breadcrumbs_text
+    item_page.check_breadcrumbs()
 
 
 def test_add_item(item_page):

@@ -40,8 +40,8 @@ jobs:
         if: "github.event.inputs.deployment_target=='extended'"
         run: pytest -m extended --alluredir=allure-results
       - name: Install Java
-       uses: actions/setup-java@v5
-       with:
+        uses: actions/setup-java@v5
+        with:
           distribution: 'microsoft' # See 'Supported distributions' for available options
           java-version: '25'
       - name: Install Allure
